@@ -1,0 +1,35 @@
+
+version: "3.7"
+
+services:
+  devsiant-api:
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    container_name: devsiant-api
+    restart: unless-stopped
+    environment: 
+      ADM_USER: 'admin'
+      ADM_PASSWORD: 'admin'
+      MAX_FILE_SIZE: 3221225472
+      CHUNK_SIZE: 8192
+    volumes:
+        - type: bind
+          source: /mnt/data
+          target: /code/server/src/static
+        - ./db:/code/server/db
+    ports:
+      - 5055:5000
+  devsiant-client:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./client
+      args: 
+        - env=production
+        - port=5055
+        - api_url=http://127.0.0.1
+        - max_file_size=3221225472
+    container_name: devsiant-client
+    restart: unless-stopped
+    ports:
+      - 5065:3000
