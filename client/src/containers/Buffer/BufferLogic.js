@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 export default () => {
     const {notesState, notesDispatch} = useContext(GlobalContext)
     const [isConnected, setConnected] = useState(false)
+    const [isClosed, setClosed] = useState(false)
     const [text, setText] = useState("")
     const [isSavedBuffer, setSavedBuffer] = useState(false)
     const [open, setOpen] = useState(false)
@@ -90,12 +91,21 @@ export default () => {
             } 
             webSocket.current.onclose = () => {
                 setConnected(false)
+                setClosed(true)
             } 
         }
         return () => {
-            webSocket.current.close()
+
         }
+
     },[])
+
+    useEffect(() => {
+        if(isClosed){
+            webSocket.current.close()
+            webSocket.current = null
+        }
+    }, [isClosed])
 
     return {
         onChange,
