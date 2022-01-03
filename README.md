@@ -58,7 +58,7 @@ In my case I'm using separate disk mounted to my raspberry pi. Depending on your
 volumes:
     - type: bind
         source: /mnt/data
-        target: /code/server/src/static
+        target: /code/server/src/media
 ```
 
 ## Notes and Features

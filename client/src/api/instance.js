@@ -20,12 +20,10 @@ axiosInstance.interceptors.response.use(function (response) {
     if (error.response.status === 401) {
       localStorage.removeItem('token')
       if(history){
-         history.push("/login")
-
+        history.push("/login")
+        return
       }
-      // else{
-      //   window.open('/login')
-      // }
+      window.open('/login')
     }
     if (error.response.status === 429) {
     

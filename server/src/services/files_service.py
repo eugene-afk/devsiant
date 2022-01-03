@@ -21,7 +21,7 @@ class FilesService:
         self.root_path = settings.root_path
 
     def get_directories_with_files(self, directory_path: str):
-        root_dir = "static"
+        root_dir = "media"
         path = self.root_path
         if directory_path:
             path = f"{path}/{directory_path}"

@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     jwt_secret: str
     jwt_algorithm: str = 'HS256'
     jwt_expiration: int = 604800
-    root_path: str = "./src/static"
+    root_path: str = "./src/media"
     max_file_size_bytes = int(os.getenv('MAX_FILE_SIZE')) if os.getenv('MAX_FILE_SIZE') else 3221225472
     chunk_size_bytes = int(os.getenv('CHUNK_SIZE')) if os.getenv('CHUNK_SIZE') else 20480
     admin_name = os.getenv('ADM_USER') if os.getenv('ADM_USER') else "admin"

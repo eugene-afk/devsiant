@@ -28,5 +28,5 @@ archive.zip
 *.sqlite3
 
 #static files
-**/static/*
-!*/static/.gitkeep
+**/media/*
+!*/media/.gitkeep

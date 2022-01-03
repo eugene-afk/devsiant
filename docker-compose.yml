@@ -16,7 +16,7 @@ services:
     volumes:
         - type: bind
           source: /mnt/data
-          target: /code/server/src/static
+          target: /code/server/src/media
         - ./db:/code/server/db
     ports:
       - 5055:5000

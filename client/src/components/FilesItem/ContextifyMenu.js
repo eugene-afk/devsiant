@@ -27,7 +27,7 @@ const ContextifyMenu = ({selectedItem, setSelectedItem, setOpen}) => {
     const copyLinkToFile = async () => {
         const url = `${baseURL}/files/download?path=${selectedItem.itemDir}&filename=${selectedItem.itemName}&token=${localStorage.token?localStorage.token:''}`
         navigator.permissions.query({name: "clipboard-write"}).then(result => {
-            if (result.state == "granted" || result.state == "prompt") {
+            if (result.state === "granted" || result.state === "prompt") {
                 //wont work with no ssl
                 navigator.clipboard.writeText(url)
             }

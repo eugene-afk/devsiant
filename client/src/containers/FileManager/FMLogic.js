@@ -5,12 +5,13 @@ import { GlobalContext } from '../../context/Provider'
 import { useHistory } from 'react-router-dom'
 import { TREE_LOAD_SUCCESS } from '../../constants/actionTypes'
 import searchFiles from '../../context/actions/files/searchFiles'
+import {PRIVATE_FILES_ROOT_DIRECTORY} from '../../constants/api'
 
 export default () => {
     const {fmState, fmDispatch} = useContext(GlobalContext)
     const history = useHistory()
     const [selectEnable, setSelectEnable] = useState(false)
-    const [dir, setDir] = useState({'dir': 'static', 'full_dir': ''})
+    const [dir, setDir] = useState({'dir': PRIVATE_FILES_ROOT_DIRECTORY, 'full_dir': ''})
     const [prevTrees, setPrevTrees] = useState([])
     const [selectedFiles, setSelectedFiles] = useState([])
     const [open, setOpen] = useState(false)
