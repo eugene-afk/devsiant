@@ -9,6 +9,7 @@ import RenameModal from '../../components/FilesItem/RenameModal'
 import CreateFolderModal from '../../containers/FileManager/CreateFolderModal'
 import { GlobalContext } from '../../context/Provider'
 import { CLEAR_ADD_FILE } from '../../constants/actionTypes'
+import { toast } from 'react-toastify'
 
 const FilesManagerUI = ({logicFM: { goForward, goBack, dir, refresh, onSearchChange, selectEnable, toggleSelect,
                                     addToSelectedList, removeFromSelectedList, downloadMultipleFiles, selectedFiles,
@@ -17,6 +18,7 @@ const FilesManagerUI = ({logicFM: { goForward, goBack, dir, refresh, onSearchCha
 
     const {fmDispatch} = useContext(GlobalContext)
     const [selectedItem, setSelectedItem] = useState({})
+    const [copiedLink, setCopiedLink] = useState("")
 
     const setContextSelectedItem = (itemName, itemDir, isFile) => {
         setSelectedItem({'itemName': itemName, 'itemDir': itemDir, 'isFile': isFile})
@@ -28,6 +30,14 @@ const FilesManagerUI = ({logicFM: { goForward, goBack, dir, refresh, onSearchCha
 
     const handleContextMenu = (event) => {
         show(event)
+    }
+
+    const handleLinkCopied = (link, isSsl) => {
+        if(isSsl){
+            toast.success("Copied!")
+        }
+        setCopiedLink(link)
+        return
     }
 
     const items = isSearchActive?foundFiles:data
@@ -118,6 +128,15 @@ const FilesManagerUI = ({logicFM: { goForward, goBack, dir, refresh, onSearchCha
                         />
                 )}
 
+                {copiedLink !== "" &&
+                    <Message
+                        style={{wordBreak: 'break-all'}}
+                        content={`Your link: ${copiedLink}`}
+                        color={"blue"}
+                        onDismiss={() => setCopiedLink("")}
+                    />
+                }
+
                 {items[dir.dir] !== undefined&& (
                     items[dir.dir]['children'].length === 0 && items[dir.dir]['files'].length === 0&&(
                         <Message
@@ -177,7 +196,7 @@ const FilesManagerUI = ({logicFM: { goForward, goBack, dir, refresh, onSearchCha
                 )}
                 <RenameModal selectedItem={selectedItem} open={open} setOpen={setOpen} fullDir={dir.full_dir} />
                 
-                <ContextifyMenu selectedItem={selectedItem} setSelectedItem={setSelectedItem} setOpen={setOpen} />
+                <ContextifyMenu selectedItem={selectedItem} setSelectedItem={setSelectedItem} setOpen={setOpen} linkCopied={handleLinkCopied} />
 
                 </Grid>
             </div>

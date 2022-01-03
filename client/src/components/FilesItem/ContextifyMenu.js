@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { GlobalContext } from '../../context/Provider';
 import { baseURL } from '../../api/baseURL'
 
-const ContextifyMenu = ({selectedItem, setSelectedItem, setOpen}) => {
+const ContextifyMenu = ({selectedItem, setSelectedItem, setOpen, linkCopied}) => {
     const history = useHistory()
     const {fmDispatch} = useContext(GlobalContext)
     const openRenameFileOrDirModal = () => {
@@ -28,11 +28,12 @@ const ContextifyMenu = ({selectedItem, setSelectedItem, setOpen}) => {
         const url = `${baseURL}/files/download?path=${selectedItem.itemDir}&filename=${selectedItem.itemName}&token=${localStorage.token?localStorage.token:''}`
         navigator.permissions.query({name: "clipboard-write"}).then(result => {
             if (result.state === "granted" || result.state === "prompt") {
-                //wont work with no ssl
+                linkCopied("", true)
                 navigator.clipboard.writeText(url)
+                return
             }
-            //TODO: show input with copied text if not ssl
         });
+        linkCopied(url, false)
     }
 
     return (
